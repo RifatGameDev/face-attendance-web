@@ -67,10 +67,11 @@ def db_test():
         }
 
     except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail=f"Database connection failed: {str(e)}"
-        )
+        return {
+            "success": False,
+            "message": "Database connection failed",
+            "error": str(e)
+        }
 
 
 @app.post("/register-user")
