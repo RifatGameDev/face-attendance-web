@@ -1,5 +1,30 @@
+# import os
+# import json
+# from dotenv import load_dotenv
+# from sqlalchemy import create_engine, text
+
+# load_dotenv()
+
+# DATABASE_URL = os.getenv("DATABASE_URL")
+
+# if not DATABASE_URL:
+#     raise RuntimeError(
+#         "DATABASE_URL is missing. Please add DATABASE_URL inside .env file.")
+
+# engine = create_engine(
+#     DATABASE_URL,
+#     pool_pre_ping=True,
+#     pool_recycle=300,
+#     connect_args={
+#         "connect_timeout": 10
+#     }
+# )
+
 import os
 import json
+import ssl
+from urllib.parse import urlparse, urlunparse
+
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, text
 
@@ -9,14 +34,33 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 if not DATABASE_URL:
     raise RuntimeError(
-        "DATABASE_URL is missing. Please add DATABASE_URL inside .env file.")
+        "DATABASE_URL is missing. Please add DATABASE_URL inside .env or Render environment variables.")
+
+
+def convert_database_url_for_pg8000(database_url: str) -> str:
+    parsed = urlparse(database_url)
+
+    # Convert postgresql:// to postgresql+pg8000://
+    if parsed.scheme in ["postgresql", "postgres"]:
+        parsed = parsed._replace(scheme="postgresql+pg8000")
+
+    # Remove query params like ?sslmode=require because pg8000 uses ssl_context instead
+    parsed = parsed._replace(query="")
+
+    return urlunparse(parsed)
+
+
+SQLALCHEMY_DATABASE_URL = convert_database_url_for_pg8000(DATABASE_URL)
 
 engine = create_engine(
-    DATABASE_URL,
+    SQLALCHEMY_DATABASE_URL,
     pool_pre_ping=True,
     pool_recycle=300,
+    pool_size=1,
+    max_overflow=0,
     connect_args={
-        "connect_timeout": 10
+        "ssl_context": ssl.create_default_context(),
+        "timeout": 10
     }
 )
 

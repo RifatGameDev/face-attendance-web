@@ -1,4 +1,4 @@
-from deepface import DeepFace
+# from deepface import DeepFace
 import tempfile
 import numpy as np
 import os
@@ -9,6 +9,7 @@ MODEL_NAME = "Facenet"
 
 
 def extract_face_embedding(image_bytes: bytes) -> list:
+    from deepface import DeepFace
     """
     Receives image bytes from frontend/API,
     saves image temporarily,
