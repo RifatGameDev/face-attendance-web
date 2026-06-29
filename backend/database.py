@@ -53,7 +53,9 @@ def convert_database_url_for_pg8000(database_url: str) -> str:
 
 SQLALCHEMY_DATABASE_URL = convert_database_url_for_pg8000(DATABASE_URL)
 
-ssl_context = ssl.create_default_context(cafile=certifi.where())
+ssl_context = ssl.create_default_context()
+ssl_context.check_hostname = False
+ssl_context.verify_mode = ssl.CERT_NONE
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
