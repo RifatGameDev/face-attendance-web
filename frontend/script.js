@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://wages-wasabi-coasting.ngrok-free.dev";
+const API_BASE_URL = "https://face-attendance-web-luap.onrender.com";
 
 //const API_BASE_URL = "";
 
