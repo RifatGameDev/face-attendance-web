@@ -347,3 +347,15 @@ async def identify_face(
             status_code=500,
             detail=f"Face identification failed: {str(e)}"
         )
+
+
+@app.get("/env-check")
+def env_check():
+    database_url = os.getenv("DATABASE_URL")
+
+    return {
+        "success": True,
+        "database_url_loaded": bool(database_url),
+        "database_url_preview": database_url[:35] if database_url else None,
+        "has_pooler": "pooler.supabase.com" in database_url if database_url else False
+    }
