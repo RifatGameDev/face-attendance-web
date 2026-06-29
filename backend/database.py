@@ -23,6 +23,7 @@
 import os
 import json
 import ssl
+import certifi
 from urllib.parse import urlparse, urlunparse
 
 from dotenv import load_dotenv
@@ -52,6 +53,8 @@ def convert_database_url_for_pg8000(database_url: str) -> str:
 
 SQLALCHEMY_DATABASE_URL = convert_database_url_for_pg8000(DATABASE_URL)
 
+ssl_context = ssl.create_default_context(cafile=certifi.where())
+
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
     pool_pre_ping=True,
@@ -59,7 +62,7 @@ engine = create_engine(
     pool_size=1,
     max_overflow=0,
     connect_args={
-        "ssl_context": ssl.create_default_context(),
+        "ssl_context": ssl_context,
         "timeout": 10
     }
 )

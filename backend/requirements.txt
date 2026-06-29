@@ -9,3 +9,5 @@ tensorflow==2.21.0
 tf-keras==2.21.0
 opencv-python-headless
 aiofiles
+numpy
+certifi
