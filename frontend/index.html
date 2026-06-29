@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Face Verification App</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <main class="app">
+
+        <!-- Landing Page -->
+        <section id="landingPage" class="screen active">
+            <div class="hero-card">
+                <div class="logo-circle">FV</div>
+                <h1>Face Verification</h1>
+                <p>Verify your identity or register your face securely.</p>
+
+                <button class="primary-btn" onclick="goToVerifyPage()">Verify</button>
+                <button class="secondary-btn" onclick="goToRegisterPage()">Register</button>
+            </div>
+        </section>
+
+        <!-- Verify Page -->
+        <section id="verifyPage" class="screen">
+            <div class="top-bar">
+                <button class="back-btn" onclick="goToLandingPage()">← Back</button>
+                <h2>Verify Face</h2>
+            </div>
+
+            <div class="camera-card">
+                <div id="verifyCameraCircle" class="camera-circle">
+                    <video id="verifyVideo" autoplay playsinline></video>
+                </div>
+
+                <p id="verifyMessage" class="instruction-text">
+                    Opening camera...
+                </p>
+
+                <div id="verifyLoader" class="loader hidden"></div>
+
+                <div id="verifyResult" class="result-box hidden"></div>
+
+                <div id="verifyActionButtons" class="verify-actions hidden">
+                    <button class="primary-btn" onclick="retryVerification()">
+                        Retry Verification
+                    </button>
+
+                    <button id="verifyRegisterBtn" class="secondary-btn" onclick="goToRegisterPage()">
+                        Register
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Register Page -->
+        <section id="registerPage" class="screen">
+            <div class="top-bar">
+                <button class="back-btn" onclick="goToLandingPage()">← Back</button>
+                <h2>Register Face</h2>
+            </div>
+
+            <div id="registerStartBox" class="camera-card">
+                <p class="instruction-text">
+                    Start registration to capture your front, left, and right face automatically.
+                </p>
+
+                <button class="primary-btn" onclick="startRegistrationFlow()">
+                    Start Registration
+                </button>
+            </div>
+
+            <div id="captureBox" class="camera-card hidden">
+                <div class="progress-camera-wrapper">
+                    <svg class="progress-ring" width="330" height="330" viewBox="0 0 330 330">
+                        <circle class="progress-ring-bg" cx="165" cy="165" r="150"></circle>
+                        <circle id="progressRingCircle" class="progress-ring-fill" cx="165" cy="165" r="150"></circle>
+                    </svg>
+
+                    <div class="camera-circle register-camera">
+                        <video id="registerVideo" autoplay playsinline></video>
+                    </div>
+                </div>
+
+                <p id="registerStepMessage" class="instruction-text">
+                    Get ready...
+                </p>
+
+                <p id="captureCounter" class="small-text">
+                    Step 0 of 3
+                </p>
+            </div>
+
+            <div id="nameSubmitBox" class="camera-card hidden">
+                <h3>Face Captured Successfully</h3>
+                <p class="small-text">Now enter your name to complete registration.</p>
+
+                <label for="nameInput">Full Name</label>
+                <input type="text" id="nameInput" placeholder="Example: Rifat" />
+
+                <button class="primary-btn" onclick="submitRegistration()">
+                    Submit Registration
+                </button>
+
+                <div id="registrationResult" class="result-box hidden"></div>
+
+                <button id="verifyYourselfBtn" class="secondary-btn hidden" onclick="goToVerifyPage()">
+                    Verify Yourself
+                </button>
+            </div>
+        </section>
+
+        <canvas id="captureCanvas" style="display:none;"></canvas>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
