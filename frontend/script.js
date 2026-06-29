@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://face-attendance-web-luap.onrender.com";
+const API_BASE_URL = "https://rifat-bysl-face-attendance-api.hf.space";
 
 //const API_BASE_URL = "";
 
