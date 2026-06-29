@@ -11,7 +11,14 @@ if not DATABASE_URL:
     raise RuntimeError(
         "DATABASE_URL is missing. Please add DATABASE_URL inside .env file.")
 
-engine = create_engine(DATABASE_URL)
+engine = create_engine(
+    DATABASE_URL,
+    pool_pre_ping=True,
+    pool_recycle=300,
+    connect_args={
+        "connect_timeout": 10
+    }
+)
 
 
 def test_database_connection():
