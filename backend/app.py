@@ -252,7 +252,7 @@ async def verify_face(
         result = verify_face_against_saved_embeddings(
             live_embedding=live_embedding,
             saved_embeddings=saved_embeddings,
-            threshold=0.85
+            threshold=0.70
         )
 
         if result["matched"]:
@@ -316,7 +316,7 @@ async def identify_face(
         result = identify_face_from_saved_embeddings(
             live_embedding=live_embedding,
             saved_embeddings=saved_embeddings,
-            threshold=0.85
+            threshold=0.70
         )
 
         if result["matched"]:

@@ -65,7 +65,7 @@ def cosine_similarity(embedding1: list, embedding2: list) -> float:
 def verify_face_against_saved_embeddings(
     live_embedding: list,
     saved_embeddings: list,
-    threshold: float = 0.85
+    threshold: float = 0.70
 ):
     best_score = -1
     best_pose = None
@@ -93,7 +93,7 @@ def verify_face_against_saved_embeddings(
 def identify_face_from_saved_embeddings(
     live_embedding: list,
     saved_embeddings: list,
-    threshold: float = 0.85
+    threshold: float = 0.70
 ):
     best_score = -1
     best_match = None
